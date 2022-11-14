@@ -1,0 +1,41 @@
+# my global config
+global:
+  scrape_interval: 15 # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  disk: /dev/vda
+  net_interface: eth0
+  scrape_target_types:
+    node_exporter: http://127.0.0.1:9100/metrics
+    clickhouse_exporter: http://127.0.0.1:9363/metrics
+  log:
+    log_save_path: /tmp/logs
+    log_file_name: exportpush
+    log_file_ext: .log
+
+# push plugin configuration
+barad:
+  is_use: false
+  app_id: 1
+  instance_id: 22
+  node_id: 33
+  project_id: 0
+  namespace: pce/upclickhouse
+  static_configs:
+    - destination:
+        - http://receiver.barad.tencentyun.com/upclickhouse.cgi
+
+prometheus:
+  is_use: true
+  static_configs:
+    - destination:
+        - http://127.0.0.1:9090/api/v1/write
+      labels:
+        cluster_name: test
+
+pushgateway:
+  is_use: false
+  job_name: push_job
+  static_configs:
+    - destination:
+        - http://127.0.0.1:9091
+      labels:
+        cluster_name: test

@@ -1,0 +1,4 @@
+# this is .gitignore file.
+out
+*.exe
+.idea
